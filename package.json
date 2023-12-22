@@ -1,0 +1,25 @@
+{
+  "name": "minimalistweb.dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231218.0",
+    "wrangler": "^3.22.1"
+  },
+  "files": [
+    "./*"
+  ],
+  "dependencies": {
+    "@cloudflare/kv-asset-handler": "^0.3.0",
+    "markdown-it": "^14.0.0",
+    "markdown-it-shikiji": "^0.9.11",
+    "shikiji": "^0.9.11"
+  }
+}
