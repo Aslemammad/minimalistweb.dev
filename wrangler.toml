@@ -1,4 +1,5 @@
 main = '_worker.js'
 
 [site]
-bucket = "./posts" # Add the directory with your static assets!
+bucket = "./posts"           # Add the directory with your static assets!
+include = ["./node_modules"] # must be an array.
