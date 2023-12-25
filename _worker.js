@@ -1,7 +1,7 @@
 import MarkdownIt from "markdown-it";
 import { fromHighlighter } from "markdown-it-shikiji/core";
 import { getHighlighterCore, loadWasm } from "shikiji/core";
-import postsListText from "./blog-list.txt";
+import postsListText from "./posts-list.txt";
 import fm from "front-matter";
 import darkTheme from "shikiji/themes/dark-plus.mjs";
 import ts from "shikiji/langs/typescript.mjs";
