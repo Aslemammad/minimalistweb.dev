@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      #title 
+    </title>
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <link rel="icon" href="/favicon.png" type="image/png" />
+
+    <link rel="canonical" href="https://minimalistweb.dev/">
+    <meta name="description" content="#description">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="#title">
+    <meta property="og:type" content="Blog">
+    <meta property="og:image" content="#og:image">
+    <meta property="og:url" content="#og:url">
+    <meta name="twitter:creator" content="@aslemammadam">
+    <meta content="#og:image" name="twitter:image">
+    <meta content="#title" name="twitter:title">
+    <meta content="#description" name="twitter:description">
+
+    <style>
+      .shiki {
+        filter: grayscale(0.5);
+      }
+
+      :root {
+        --dark: #141414;
+        --gray: #525252;
+        --light: #E7E7E7;
+        --bg: #fff;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #141414;
+          --light: #525252;
+          --gray: #E7E7E7;
+          --dark: #fff;
+        }
+      }
+      body {
+        font-display: block;
+      }
+
+      body[data-theme="light"] {
+        --dark: #141414;
+        --gray: #525252;
+        --light: #E7E7E7;
+        --bg: #fff;
+      }
+
+      body[data-theme="dark"] {
+        --bg: #141414;
+        --light: #525252;
+        --gray: #E7E7E7;
+        --dark: #fff;
+      }
+
+      .mr-auto {
+        margin-right: auto;
+      }
+      .ml-auto {
+        margin-left: auto;
+      }
+    </style>
+    <script type="module" src="/themer.js" async></script>
+    <link
+      rel="stylesheet"
+      href="/node_modules/@unocss/reset/tailwind.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/uno.css"
+    />
+  </head>
+  <body class="font-sans max-w-2xl mx-auto px-2 py-2 bg-bg" data-theme="theme">
+    <header class="h-[20vh] flex items-center">
+      <a href="/">
+        <h1 class="text-2xl font-semibold text-dark">Minimalist Web Dev</h1>
+      </a>
+      <div id="themer" class="w-full flex items-center"></div>
+    </header>
+    <section class="min-h-[75vh]">
+      <main
+        id="content"
+        class="prose prose-dark dark:prose-invert text-dark min-w-full max-w-full"
+      >
+        <!-- placeholder -->
+      </main>
+    </section>
+    
+  </body>
+</html>

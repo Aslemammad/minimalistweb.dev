@@ -1,27 +1,25 @@
-import { html, reactive } from "https://esm.sh/@arrow-js/core";
+import { html, reactive } from "./node_modules/@arrow-js/core/dist/index.mjs";
 
 import {
-    getCurrentTheme,
-    init,
-    setTheme,
-} from "https://esm.sh/@barelyreaper/themer";
+  getCurrentTheme,
+  init,
+  setTheme,
+} from "./node_modules/@barelyreaper/themer/index.mjs";
+
+init();
 
 const state = reactive({
   theme: getCurrentTheme(),
 });
 
-init();
-
 const toggleTheme = () => {
-  state.theme = getCurrentTheme();
-  setTheme(getCurrentTheme() === "dark" ? "light" : "dark");
+  const theme = getCurrentTheme() === "dark" ? "light" : "dark";
+  setTheme(theme);
+  state.theme = theme;
+  document.cookie = `data-theme=${theme}`;
 };
 
-const toggleButtonContainer = document.createElement("div");
-toggleButtonContainer.classList.add("w-full");
-toggleButtonContainer.classList.add("flex");
-toggleButtonContainer.classList.add("items-center");
-document.querySelector("header").append(toggleButtonContainer);
+const toggleButtonContainer = document.getElementById("themer");
 
 const toggleButton = html`
   <button class="ml-auto">
@@ -29,16 +27,20 @@ const toggleButton = html`
       class="h-1 w-[50px] rounded-full bg-light overflow-hidden"
       @click="${() => toggleTheme()}"
     >
-      ${() => toggleable(state.theme)}
+      ${() => toggleable(state)}
     </div>
   </button>
 `;
 
-const toggleable = (theme) => {
-  let classList =
-    "h-full w-[50%] transition-all delay-75 bg-accent rounded-full flex items-center ";
-  classList += theme === "dark" ? "ml-auto" : "mr-auto";
-  return html` <div class="${classList}"></div> `;
+const toggleable = (state) => {
+  return html`
+    <div
+      class="h-full w-[50%] transition-all delay-75 bg-dark rounded-full flex items-center ${state.theme ===
+      "dark"
+        ? "ml-auto"
+        : "mr-auto"}"
+    ></div>
+  `;
 };
 
 toggleButton(toggleButtonContainer);
