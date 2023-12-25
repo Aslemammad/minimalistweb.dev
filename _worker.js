@@ -1,7 +1,7 @@
 import MarkdownIt from "markdown-it";
 import { fromHighlighter } from "markdown-it-shikiji/core";
 import { getHighlighterCore, loadWasm } from "shikiji/core";
-import manifestText from "__STATIC_CONTENT_MANIFEST";
+import postsListText from "./blog-list.txt";
 import fm from "front-matter";
 import darkTheme from "shikiji/themes/dark-plus.mjs";
 import ts from "shikiji/langs/typescript.mjs";
@@ -14,7 +14,7 @@ import { ogImage } from "./og-image";
 const base = "https://minimalistweb.dev";
 
 /** @type {Array<string>} */
-const postsPaths = Object.keys(JSON.parse(manifestText)).sort();
+const postsPaths = postsListText.split("\n").filter(Boolean);
 
 await loadWasm((obj) => WebAssembly.instantiate(wasm, obj));
 
@@ -84,7 +84,6 @@ export default {
 
         return date2 - date1;
       });
-      console.log(posts);
 
       if (requestUrl.pathname === "/sitemap.xml") {
         return new Response(
