@@ -1,10 +1,10 @@
-import { html, reactive } from "./node_modules/@arrow-js/core/dist/index.mjs";
+import { html, reactive } from "./vendor/@arrow-js/core/dist/index.min.mjs";
 
 import {
   getCurrentTheme,
   init,
   setTheme,
-} from "./node_modules/@barelyreaper/themer/index.mjs";
+} from "./vendor/@barelyreaper/themer/index.mjs";
 
 init();
 

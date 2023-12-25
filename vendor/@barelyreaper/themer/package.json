@@ -1,0 +1,35 @@
+{
+  "name": "@barelyreaper/themer",
+  "version": "2.0.1",
+  "private": false,
+  "description": "Graceful dark mode support in vanilla javascript",
+  "keywords": [
+    "dark theme",
+    "dark",
+    "mode",
+    "vanilla",
+    "js",
+    "themer"
+  ],
+  "homepage": "https://github.com/barelyhuman/themer",
+  "bugs": "https://github.com/barelyhuman/themer/issues/",
+  "license": "MIT",
+  "author": "Reaper <ahoy@barelyhuman.dev>",
+  "types": "./index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./index.d.ts",
+      "module": "./index.mjs",
+      "import": "./index.mjs",
+      "require": "./index.cjs",
+      "default": "./index.cjs"
+    }
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
