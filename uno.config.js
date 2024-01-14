@@ -21,10 +21,10 @@ export default defineConfig({
     presetWind(),
     presetTypography(),
     presetWebFonts({
-      provider: "google",
-      fonts: {
-        sans: "Ubuntu:500,600,700",
-      },
+      // provider: "google",
+      // fonts: {
+      //   sans: "Ubuntu:500,600,700",
+      // },
     }),
   ],
 });

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:posts": "chokidar ./posts/**/*.md -c \"ls posts > posts-list.txt\"",
+    "posts": "cd posts && ls ./*.md > ../posts-list.txt",
+    "dev:posts": "npm run posts && chokidar ./posts/**/*.md -c \"npm run posts\"",
     "dev:uno": "unocss ./*.js ./*.html -w",
     "dev:wrangler": "wrangler pages dev .",
     "dev": "npm-run-all --parallel dev:*"

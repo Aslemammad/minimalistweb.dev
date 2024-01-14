@@ -55,8 +55,6 @@ export default {
    * @param {import("@cloudflare/workers-types").ExecutionContext} ctx
    */
   async fetch(request, env, ctx) {
-    const cookies = parseCookies(request.headers.get("cookie") ?? "");
-    const theme = cookies["data-theme"] ?? "dark";
     let metaTitle = "Minimalist Web Dev";
     const requestUrl = new URL(request.url);
     const ogPath = new URL("/og/", requestUrl.origin);
@@ -74,7 +72,7 @@ export default {
 
             /** @type {Content} */
             const content = fm(await postResponse.text());
-            const postUrl = "/p/" + postPath.split(".")[0]; // post link (/p/how-to-write-js)
+            const postUrl = "/p/" + postPath.split("/")[1].replace('.md', ''); // post link (/p/how-to-write-js)
             return { ...content, postPath, postUrl };
           })
         )
@@ -102,12 +100,19 @@ export default {
           {
             headers: {
               "content-type": "text/xml;charset=UTF-8",
+              "Cache-Control": maxAge 
             },
           }
         );
       }
 
-      const placeholder = posts
+      const intro = await (await env.ASSETS.fetch(new URL(
+        "intro.md",
+        requestUrl.origin
+      ))).text()
+
+      let placeholder = md.render(intro)
+      placeholder += posts
         .map((content) => {
           const date = new Date(
             content.attributes.created_at
@@ -127,7 +132,7 @@ _${date}_
         })
         .join("");
       return new Response(
-        render(templateStr, placeholder, theme, {
+        render(templateStr, placeholder, 'light', {
           title: metaTitle,
           description: "",
           "og:url": request.url,
@@ -136,6 +141,7 @@ _${date}_
         {
           headers: {
             "content-type": "text/html;charset=UTF-8",
+            "Cache-Control": maxAge 
           },
         }
       );
@@ -166,7 +172,7 @@ _${date}_
 ${content.body}`);
 
       return new Response(
-        render(templateStr, placeholder, theme, {
+        render(templateStr, placeholder, 'light', {
           title: metaTitle,
           description: content.attributes.description,
           "og:url": request.url,
@@ -175,6 +181,7 @@ ${content.body}`);
         {
           headers: {
             "content-type": "text/html;charset=UTF-8",
+            "Cache-Control": maxAge 
           },
         }
       );
@@ -205,19 +212,4 @@ function render(templateStr, placeholder, theme, meta) {
   return value;
 }
 
-/**
- *
- * @param {string} cookiesString
- * @returns {Record<string, string>}
- */
-function parseCookies(cookiesString) {
-  return cookiesString
-    .split(";")
-    .map(function (cookieString) {
-      return cookieString.trim().split("=");
-    })
-    .reduce(function (acc, curr) {
-      acc[curr[0]] = curr[1];
-      return acc;
-    }, {});
-}
+const maxAge = `max-age=${60 * 60 * 24 * 3}`

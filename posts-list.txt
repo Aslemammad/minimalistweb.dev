@@ -1,2 +1,1 @@
-how-to-copy.md
-how-to.md
+./streams-and-react-server-components.md
