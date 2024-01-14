@@ -4,7 +4,7 @@ description: Many developers have used streams when building technology, but how
 created_at: "2024-01-13"
 ---
 
-Many developers have used streams when building technology, but how many have truly understood their intricacies and their connection to React Server Components? Personally, the concept never quite clicked for me. It wasn't until contributing to [Waku](https://waku.gg) and being curious around how RSCs stream html—requiring me to take them seriously. Waku is a minimal layer over React Server Components using Vite.
+Many developers have used streams when building technology, but how many have truly understood their intricacies and their connection to React Server Components? Personally, the concept never quite clicked for me. It wasn't until contributing to [Waku](https://waku.gg) and being curious about how RSCs stream html—requiring me to take them seriously. Waku is a minimal layer over React Server Components using Vite.
 
 In this essay, I'm going to talk more about the concept, the abstraction the Streams API provides around the concept and how React Server Components leverage this API.
 
@@ -21,14 +21,14 @@ for await (const chunk of response.body) {
 }
 ```
 
-This saves memory, as you handle one chunk at a time instead of whole file. Reading that file becomes almost instantaneous, as soon as your computer process the first chunk, it'd pass it to you without waiting for all the data to be processed.
+This saves memory, as you handle one chunk at a time instead of the whole file. Reading that file becomes almost instantaneous, as soon as your computer process the first chunk, it'd pass it to you without waiting for all the data to be processed.
 
 > A chunk is a single piece of data that is written to or read from a stream. It can be of any type; streams can even contain chunks of different types. [whatwg](https://streams.spec.whatwg.org/)
 
 The web streams API, just provides a standard API for this concept, that not only handles files, but any form of data!
 
 ```ts
-// All these methods embed the whole response in memory and return all of the result as opposed to response.body
+// All these methods embed the whole response in memory and return all of the results as opposed to response.body
 response.blob()
 response.text()
 response.json()
@@ -36,7 +36,7 @@ response.json()
 
 ### RSC and `Transfer-Encoding: chunked`
 
-While curious about how the React team streams the html, most google articles referred to streaming videos with HLS (HTTP Live Streaming), which wasn't the desired information. It wasn't until I stumbled upon [this](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Transfer-Encoding) mdn document.
+While curious about how the React team streams the html, most Google articles referred to streaming videos with HLS (HTTP Live Streaming), which wasn't the desired information. It wasn't until I stumbled upon [this](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Transfer-Encoding) mdn document.
 
 This header means that the response I'm sending is divided into multiple chunks and we can add to those chunks in a non-blocking way after the initial response.
 The key is that React just returns a stream ([ReadableStream](https://github.com/facebook/react/blob/c5b9375767e2c4102d7e5559d383523736f1c902/packages/react-dom/src/server/ReactDOMFizzServerEdge.js#L176) for edge, and a pipe method for Nodejs [Streams](https://github.com/facebook/react/blob/c5b9375767e2c4102d7e5559d383523736f1c902/packages/react-dom/src/server/ReactDOMFizzServerNode.js#L189) ) and would let the server handle the rest!
@@ -58,7 +58,7 @@ fetch("./tortoise.png")
 // https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_streams#consuming_a_fetch_as_a_stream
 ```
 
-It's a stream that you're supposed to read from, simple as that, and you cannot write (enqueue) to it, unless you are the one who's providing the stream itself which you'll have access to an object called the controller at that point!
+It's a stream that you're supposed to read from, simple as that, and you cannot write (enqueue) to it unless you are the one who's providing the stream itself which you'll have access to an object called the controller at that point!
 
 ```ts
 // you might want to open the console and try running this code
@@ -79,13 +79,13 @@ controller.enqueue('chunk 3')
 controller.close() // no more data
 ```
 
-When receiving a `ReadableStream` from another source, like the `fetch` API, you won't have the ability to write data into it because you do not have access to the controller. Additionally, it makes sense, you cannot modify a response coming from the server :)
+When receiving a `ReadableStream` from another source, like the `fetch` API, you won't have the ability to write data into it because you do not have access to the controller. Additionally, it makes sense, that you cannot modify a response coming from the server :)
 
 #### Pull
 
 [Matteo](https://twitter.com/matteocollina) highlighted the pull method as a better way to add data to readable streams, something I wasn't familiar with. The `pull` method is triggered when the consumer actively wants to receive data, unlike `start`, which activates when the readable stream is created.
 
-In the earlier examples, data was added without considering if the consumer actually needed it. In such cases, the stream behaves like a push source. By using the `pull` method, we transform our stream into a pull source. This allows the the stream to provide the necessary data only when needed. [Here's](https://streams.spec.whatwg.org/#example-rs-pull) an example.
+In the earlier examples, data was added without considering if the consumer needed it. In such cases, the stream behaves like a push source. By using the `pull` method, we transform our stream into a pull source. This allows the stream to provide the necessary data only when needed. [Here's](https://streams.spec.whatwg.org/#example-rs-pull) an example.
 
 #### Reader
 
@@ -166,7 +166,7 @@ writer.write('chunk 3')
 
 ### TransformStream
 
-It's a stream that is mainly used for transforming the chunks we receive. It gives us two streams, one readable and one writable! We write into the writable, the chunks will be processed (transformed) by the the `transform` function that we pass the the TransformStream, and then whatver result will be enqueued to the readable stream. Without the `transform` function, it will just act as a bridge between writable streams and readable streams.
+It's a stream that is mainly used for transforming the chunks we receive. It gives us two streams, one readable and one writable! We write into the writable, and the chunks will be processed (transformed) by the `transform` function that we pass the the TransformStream, and then whatever result will be enqueued to the readable stream. Without the `transform` function, it will just act as a bridge between writable streams and readable streams.
 
 ```ts
 // https://streams.spec.whatwg.org/#example-transform-identity
@@ -225,8 +225,8 @@ httpResponseBody
 
 #### Internal queue
 
-For readable streams, it's data that has been enqueued to the stream but haven't been read by the consumer (a reader or another writable/transform stream).
-For writable streams, it's the data that has been written to the stream itself, but still haven't been written into the underlying sink (file system for instance).
+For readable streams, it's data that has been enqueued to the stream but hasn't been read by the consumer (a reader or another writable/transform stream).
+For writable streams, it's the data that has been written to the stream itself but still hasn't been written into the underlying sink (file system for instance).
 
 #### High water mark
 
@@ -234,14 +234,14 @@ The boundary for the amount of data that the stream can handle in the internal q
 
 #### Backpressure
 
-A signal from the consumer stream to the parent stream to slow the amount of data we receive (read or write), so we first handle the current data that we have in the current internal queue. 
+A signal from the consumer stream to the parent stream slows the amount of data we receive (read or write), so we first handle the current data that we have in the current internal queue. 
 
-And that's it! The concept of Streams might mean different things in different contexes, but the core idea is handling small pieces of data sequentially, no matter if it's Video Streaming or React Server Components. The concept is not that complex but generating streaming-compatible data is challenging part, and I guess that's why it took the React team years to reach what we call today React Server components.   
+And that's it! The concept of Streams might mean different things in different contexts, but the core idea is handling small pieces of data sequentially, no matter if it's Video Streaming or React Server Components. The concept is not that complex but generating streaming-compatible data is the challenging part, and I guess that's why it took the React team years to reach what we call today React Server components.   
 
-I'm [Mohammad](https://twitter.com/asleMammadam) and this is my first essay and post on my blog, would be happy to hear your thoughts. Don't hesitate saying hello in my DM! I'm also available for hire, so let's discuss that if you have an opportunity :)    
+I'm [Mohammad](https://twitter.com/asleMammadam) and this is my first essay and post on my blog, would be happy to hear your thoughts. Don't hesitate to say hello in my DM! I'm also available for hire, so let's discuss that if you have an opportunity :)    
 
 # Reviewers
-Thanks to all of my friends that reviewed this document.
+Thanks to all of my friends who reviewed this document.
 - [Stefano Magni](https://twitter.com/noriSte)
 - [Reaper](https://twitter.com/barelyreaper)
 - [Matteo](https://twitter.com/matteocollina/)
