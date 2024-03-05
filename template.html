@@ -104,25 +104,17 @@
   var storageKey = 'themer'
   var classNameDark = 'dark';
   var classNameLight = 'light';
-  debugger
   function setClassOnDocumentBody(darkMode) {
     document.body.setAttribute(THEME_DATA_ATTR, darkMode);
-    // document.body.classList.add(darkMode ? classNameDark : classNameLight);
-    // document.body.classList.remove(darkMode ? classNameLight : classNameDark);
   }
   var localStorageTheme = null;
   try {
     localStorageTheme = localStorage.getItem(storageKey);
   } catch (err) {}
   var localStorageExists = localStorageTheme !== null;
-  // if (localStorageExists) {
-  //   localStorageTheme = JSON.parse(localStorageTheme);
-  // }
   if (localStorageExists) {
     setClassOnDocumentBody(localStorageTheme);
   } else {
-    
-    // var isDarkMode = document.body.classList.contains(classNameDark);
     localStorage.setItem(storageKey, JSON.stringify(document.body.getAttribute(THEME_DATA_ATTR)));
   }
 })();
