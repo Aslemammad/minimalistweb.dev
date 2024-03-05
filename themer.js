@@ -16,7 +16,6 @@ const toggleTheme = () => {
   const theme = getCurrentTheme() === "dark" ? "light" : "dark";
   setTheme(theme);
   state.theme = theme;
-  document.cookie = `data-theme=${theme}`;
 };
 
 const toggleButtonContainer = document.getElementById("themer");

@@ -1,1 +1,2 @@
 ./streams-and-react-server-components.md
+./we-might-be-different-kind-of-developers.md

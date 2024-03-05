@@ -132,7 +132,7 @@ _${date}_
         })
         .join("");
       return new Response(
-        render(templateStr, placeholder, 'light', {
+        render(templateStr, placeholder, {
           title: metaTitle,
           description: "",
           "og:url": request.url,
@@ -172,7 +172,7 @@ _${date}_
 ${content.body}`);
 
       return new Response(
-        render(templateStr, placeholder, 'light', {
+        render(templateStr, placeholder, {
           title: metaTitle,
           description: content.attributes.description,
           "og:url": request.url,
@@ -202,10 +202,9 @@ const placeholderComment = "<!-- placeholder -->";
  * @param {string} theme
  * @param {Object} meta
  */
-function render(templateStr, placeholder, theme, meta) {
+function render(templateStr, placeholder, meta) {
   let value = templateStr
     .replace(placeholderComment, placeholder)
-    .replace('data-theme="theme"', `data-theme="${theme}"`);
   for (const key of Object.keys(meta)) {
     value = value.replaceAll(`#${key}`, meta[key]);
   }

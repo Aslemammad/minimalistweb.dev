@@ -69,6 +69,7 @@
         margin-left: auto;
       }
     </style>
+    
     <script type="module" src="/themer.js" async></script>
     <link
       rel="stylesheet"
@@ -97,6 +98,35 @@
       <script async data-uid="40e4ca24e5" src="https://exciting-pioneer-5052.ck.page/40e4ca24e5/index.js"></script>
     </section>
 
+    <script>
+    (function() {
+  const THEME_DATA_ATTR = "data-theme";
+  var storageKey = 'themer'
+  var classNameDark = 'dark';
+  var classNameLight = 'light';
+  debugger
+  function setClassOnDocumentBody(darkMode) {
+    document.body.setAttribute(THEME_DATA_ATTR, darkMode);
+    // document.body.classList.add(darkMode ? classNameDark : classNameLight);
+    // document.body.classList.remove(darkMode ? classNameLight : classNameDark);
+  }
+  var localStorageTheme = null;
+  try {
+    localStorageTheme = localStorage.getItem(storageKey);
+  } catch (err) {}
+  var localStorageExists = localStorageTheme !== null;
+  // if (localStorageExists) {
+  //   localStorageTheme = JSON.parse(localStorageTheme);
+  // }
+  if (localStorageExists) {
+    setClassOnDocumentBody(localStorageTheme);
+  } else {
+    
+    // var isDarkMode = document.body.classList.contains(classNameDark);
+    localStorage.setItem(storageKey, JSON.stringify(document.body.getAttribute(THEME_DATA_ATTR)));
+  }
+})();
+    </script>
     
   </body>
 </html>
