@@ -59,7 +59,7 @@ export default {
     const requestUrl = new URL(request.url);
     const ogPath = new URL("/og/", requestUrl.origin);
 
-    if (requestUrl.pathname === ".well-known/nostr.json") {
+    if (requestUrl.pathname === "/.well-known/nostr.json") {
       return Response(JSON.stringify(nostr))
     }
 
