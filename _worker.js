@@ -224,7 +224,7 @@ const maxAge = `max-age=${60 * 60 * 24 * 3}`
 
 const nostr = {
   "names": {
-    "Mohammad Bagher Abiyat": "9e77eabc6b7c575a619ab7ce235b3d99443ff33b8b9d805eacc5ec3a38a48976"
+    "mohammad": "9e77eabc6b7c575a619ab7ce235b3d99443ff33b8b9d805eacc5ec3a38a48976"
   },
   "relays": {
     "9e77eabc6b7c575a619ab7ce235b3d99443ff33b8b9d805eacc5ec3a38a48976": [
