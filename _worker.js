@@ -222,7 +222,7 @@ const nostr = {
     "Mohammad Bagher Abiyat": "9e77eabc6b7c575a619ab7ce235b3d99443ff33b8b9d805eacc5ec3a38a48976"
   },
   "relays": {
-    "YOUR_NOSTR_PUBLIC_KEY_IN_HEX_FORMAT": [
+    "9e77eabc6b7c575a619ab7ce235b3d99443ff33b8b9d805eacc5ec3a38a48976": [
       "wss://nos.lol/",
       "wss://nostr.land/",
       "wss://nostr.wine/",
