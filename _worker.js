@@ -60,7 +60,12 @@ export default {
     const ogPath = new URL("/og/", requestUrl.origin);
 
     if (requestUrl.pathname === "/.well-known/nostr.json") {
-      return new Response(JSON.stringify(nostr))
+      return new Response(JSON.stringify(nostr), {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "content-type": "application/json",
+        },
+      })
     }
 
     // get all the blog posts from assets to have them on /
