@@ -59,6 +59,10 @@ export default {
     const requestUrl = new URL(request.url);
     const ogPath = new URL("/og/", requestUrl.origin);
 
+    if (requestUrl.pathname === ".well-known/nostr.json") {
+      return Response(JSON.stringify(nostr))
+    }
+
     // get all the blog posts from assets to have them on /
     if (requestUrl.pathname === "/" || requestUrl.pathname === "/sitemap.xml") {
       const posts = (
@@ -212,3 +216,20 @@ function render(templateStr, placeholder, meta) {
 }
 
 const maxAge = `max-age=${60 * 60 * 24 * 3}`
+
+const nostr = {
+  "names": {
+    "YOUR_NOSTR_NAME": "9e77eabc6b7c575a619ab7ce235b3d99443ff33b8b9d805eacc5ec3a38a48976"
+  },
+  "relays": {
+    "YOUR_NOSTR_PUBLIC_KEY_IN_HEX_FORMAT": [
+      "wss://nos.lol/",
+      "wss://nostr.land/",
+      "wss://nostr.wine/",
+      "wss://purplerelay.com/",
+      "wss://relay.damus.io/",
+      "wss://relay.primal.net/",
+      "wss://relay.snort.social/"
+    ]
+  }
+}
